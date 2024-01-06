@@ -62,16 +62,24 @@ async function sendMail(email, username, password){
 
 router.post('/login',async(req,res)=>{
     const {username,password} = req.body;
-    const user = await userModel.findOne({username});
-    if(!user){
-        return res.json({message:"user doesn't exists"});
+    console.log(username);
+    try{
+        const user = await userModel.findOne({username});
+        if(!user){
+            return res.json({message:"user doesn't exists"});
+        }
+        const isValidPassword = await bcrypt.compare(password,user.password);
+        if(!isValidPassword){
+            return res.json({message:"Password doesn't match"})
+        }
+        const token = jwt.sign({id:user._id},process.env.SECRET);
+        res.json({token,userID:user._id});
+
+    }catch(err){
+        console.error(error);
+        res.status(500).json({ message: "Error while Loggin In!!" });
     }
-    const isValidPassword = await bcrypt.compare(password,user.password);
-    if(!isValidPassword){
-        return res.json({message:"Password doesn't match"})
-    }
-    const token = jwt.sign({id:user._id},process.env.SECRET);
-    res.json({token,userID:user._id});
+    
     
 })
 
