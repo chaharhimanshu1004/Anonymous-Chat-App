@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
 const userModel = require('../model/UserModel');
@@ -58,4 +59,20 @@ async function sendMail(email, username, password){
         console.log('Cant send the mail bcz: ',err);
     }
 }
+
+router.post('/login',async(req,res)=>{
+    const {username,password} = req.body;
+    const user = await userModel.findOne({username});
+    if(!user){
+        return res.json({message:"user doesn't exists"});
+    }
+    const isValidPassword = await bcrypt.compare(password,user.password);
+    if(!isValidPassword){
+        return res.json({message:"Password doesn't match"})
+    }
+    const token = jwt.sign({id:user._id},process.env.SECRET);
+    res.json({token,userID:user._id});
+    
+})
+
 module.exports = router;
