@@ -1,6 +1,7 @@
 import React from 'react'
 import '../styling/SidebarChannel.css' 
 
+
 export default function SidebarChannel() {
   return (
     <div className='sidebarChannel'>
