@@ -1,13 +1,19 @@
 
 import './App.css';
 import SignUp from './components/SignUp'
+import Sidebar from './components/Sidebar';
+import Chat from './components/Chat';
 
 function App() {
   return (
-    <div>
-      <div>
-      <SignUp></SignUp>
-      </div>
+    
+    <div  className='app'>
+      {/* <SignUp></SignUp> */}
+      
+      <Sidebar/>
+      <Chat/>
+      
+
     </div>
   );
 }

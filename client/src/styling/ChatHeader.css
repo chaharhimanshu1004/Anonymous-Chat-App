@@ -1,0 +1,27 @@
+.chatHeader {
+    display: flex;
+    color: gray;
+    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    
+
+}
+.chatHeader__hash {
+    color: gray;
+    font-size: 30px;
+    padding: 10px;
+}
+.chatHeader__left>h3 {
+    display: flex;
+    align-items: center;
+    font-size: x-large;
+    color: white;
+}
+.chatHeader__right {
+    padding-right: 10px;
+
+    align-items: center;
+    justify-content: space-between;
+
+}
