@@ -1,13 +1,31 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import '../styling/Sidebar.css'
+import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
 import SidebarChannel from './SidebarChannel';
 import { Avatar } from '@mui/material';
-import MicIcon from '@mui/icons-material/Mic';
-import HeadphonesIcon from '@mui/icons-material/Headphones';
 import SettingsIcon from '@mui/icons-material/Settings';
+import axios from 'axios'
+import { useSelector } from 'react-redux';
+import { selectUser } from '../slices/userSlice'
 export default function Sidebar() {
+  const user = useSelector(selectUser);
+  const [channels,setChannels] = useState([]);
+  
+
+  useEffect(()=>{
+    const getChannels = async()=>{
+      try{
+        const response = await axios.get('http://localhost:6001/api/users/get/channelList');
+        setChannels(response.data);
+      }catch(err){
+        console.log('Error in getting channels: ',err);
+      }
+    }
+    getChannels();
+    
+  },[])
   return (
     <div className='sidebar'>
       <div className="sidebar__top">
@@ -22,11 +40,16 @@ export default function Sidebar() {
           </div>
           <AddIcon className='sidebar__addChanel' />
         </div>
+
         <div className="sidebar__channelList">
-          <SidebarChannel />
-          <SidebarChannel />
-          <SidebarChannel />
-          <SidebarChannel />
+          {
+            channels.map((channel)=>(
+              (<SidebarChannel key={channel._id} channel={channel}/>)
+            ))
+          }
+          
+
+
         </div>
       </div>
       <div className="sidebar__profile">
