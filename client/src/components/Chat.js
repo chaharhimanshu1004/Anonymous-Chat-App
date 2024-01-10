@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react';
 import '../styling/Chat.css'
 import Message from './Message';
 import ChatHeader from './ChatHeader'
@@ -15,18 +16,27 @@ export default function Chat() {
   const user = useSelector(selectUser);
   const channelId = useSelector(selectChannelId)
   const channelName = useSelector(selectChannelName)
+  const [input,setInput] = useState('');
+  const [messages,setMessages] = useState([]);
 
-
-
-
-
-
-
+  useEffect(()=>{
+    const fetchMessages = async()=>{
+      if(channelId){
+        try{
+          const response = await axios.get(`http://localhost:6001/api/users/get/conversation/${channelId}`)
+          console.log(response.data);
+        }catch(err){
+          console.log(err)
+        }
+      }
+    }
+    fetchMessages();
+  })
 
 
   return (
     <div className='chat1'>
-      <ChatHeader />
+      <ChatHeader channelName={channelName} />
       <div className="chat__messages">
         <Message />
         <Message />
@@ -36,7 +46,7 @@ export default function Chat() {
       <div className="chat__input">
         <AddCircleIcon fontSize='large' />
         <form>
-          <input type="text" placeholder={`Message #Youtube`} />
+          <input value={input}  type="text" placeholder={`Message #Youtube`}  onChange={(e)=>setInput(e.target.value)} />
           <button className='chat__inputButton' type='submit'>Send Message</button>
 
 
