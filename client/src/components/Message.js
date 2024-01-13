@@ -2,17 +2,17 @@ import React from 'react'
 import '../styling/Message.css'
 import { Avatar } from '@mui/material';
 
-function Message() {
+function Message({message,user,timestamp}) {
   return (
     <div className='message'>
         <Avatar/>
         <div className="message__info">
-            <h4>Helloooo
+            <h4>{user.name}
                 <span className="message__timestamp">
-                    This is a timestamp
+                    {new Date(parseInt(timestamp)).toDateString()}
                 </span>
             </h4>
-            <p>This is a message</p>
+            <p>{message}</p>
         </div>
     </div>
   )

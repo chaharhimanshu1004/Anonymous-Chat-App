@@ -1,13 +1,25 @@
 
 import './App.css';
 import SignUp from './components/SignUp'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Sidebar from './components/Sidebar';
 import Chat from './components/Chat';
 import { selectUser } from './slices/userSlice'
+import {login,logout} from './slices/userSlice'
+import { useEffect } from 'react';
+
+
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(login({ name: "kanha buddy", uid: "21627463272742" }));
+  }, [dispatch]);
   const user = useSelector(selectUser);
+
+
+  
+  
 
   return (
     

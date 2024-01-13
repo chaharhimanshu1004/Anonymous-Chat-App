@@ -35,13 +35,23 @@
     display: flex;
 }
 .chat__inputButton {
-    display: none;
-    width: 0;
-    height: 0;
-    background: none;
+    background-color: #474b53;
     border: none;
+    padding-right: 13px;
+    padding-bottom: 3px;
+}
+.chat__selectChannelMessage {
+    text-align: center;
+    font-weight: bold;
+    font-size: 38px;
+    color: rgba(183, 186, 189, 0.329);
+    margin-top: 285px;
+    
+
 }
 
-.chat__inputIcons>.MuiSvgIcon-root {
+
+.chat__inputIcons {
     padding: 5px;
+    padding-right: 25px;
 }
