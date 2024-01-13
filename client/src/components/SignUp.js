@@ -2,7 +2,15 @@ import React from "react";
 import axios from "axios"
 import { useState } from "react";
 import * as Components from './sign-log';
+import '../styling/signup.css'
+import {useDispatch} from 'react-redux'
+import {login} from '../slices/userSlice'
+import { useEffect } from "react";
 
+const getUserFromLocalStorage = () => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+};
 
 function App() {
     const [signIn, toggle] = React.useState(true);
@@ -10,6 +18,14 @@ function App() {
     const [password,setPassword] = useState('');
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const storedUser = getUserFromLocalStorage();
+        if (storedUser) {
+          dispatch(login(storedUser));
+        }
+    }, [dispatch]);
 
     const handleSignIn = async(event)=>{
         event.preventDefault();
@@ -18,6 +34,15 @@ function App() {
                 username,
                 password
             });
+            if(response.data.token){
+                dispatch(login({
+                    name:username,
+                    uid:response.data.userId
+                }))
+            }
+            const {  userId } = response.data;
+            localStorage.setItem('user', JSON.stringify({ username, userId }));
+            
             
         }catch (error) {
             console.error('Error during login:', error);
@@ -37,24 +62,25 @@ function App() {
         
     }
     return(
+        <div className="signupBody">
          <Components.Container>
              <Components.SignUpContainer signinIn={signIn}>
                  <Components.Form>
-                     <Components.Title className="text-2xl ">Create Account</Components.Title>
-                     <Components.Input type='text' value={name} onChange={(e)=>setName(e.target.value)} className="mt-2" placeholder='Name' />
+                     <Components.Title style={{fontSize:'1.5rem',lineHeight:'2rem'}}>Create Account</Components.Title>
+                     <Components.Input type='text' value={name} onChange={(e)=>setName(e.target.value)} style={{marginTop:'.5rem'}} placeholder='Name' />
                      <Components.Input  type='email' value={email} onChange={(e)=>setEmail(e.target.value)} placeholder='Bennett Email' />
                      {/* <Components.Input type='password' placeholder='Confirm Bennett Email' /> */}
-                     <Components.Button onClick={handleSignUp} className="mt-2">Sign Up</Components.Button>
+                     <Components.Button onClick={handleSignUp} style={{marginTop:'.5rem'}}>Sign Up</Components.Button>
                  </Components.Form>
              </Components.SignUpContainer>
 
              <Components.SignInContainer signinIn={signIn}>
                   <Components.Form>
-                      <Components.Title className="text-2xl">Sign in</Components.Title>
+                      <Components.Title style={{fontSize:'1.5rem',lineHeight:'2rem'}}>Sign in</Components.Title>
                       <Components.Input type='text' value={username} onChange={(e)=>setUsername(e.target.value)} placeholder='Username' />
                       <Components.Input type='password' value={password} onChange={(e)=>setPassword(e.target.value)} placeholder='Password' />
                       {/* <Components.Anchor className="text-lg" href='#'>Forgot your password?</Components.Anchor> */}
-                      <Components.Button onClick={handleSignIn}  className="mt-2">Sigin In</Components.Button>
+                      <Components.Button onClick={handleSignIn}  style={{marginTop:'.5rem'}}>Log In</Components.Button>
                   </Components.Form>
              </Components.SignInContainer>
 
@@ -62,7 +88,7 @@ function App() {
                  <Components.Overlay signinIn={signIn}>
 
                  <Components.LeftOverlayPanel signinIn={signIn}>
-                     <Components.Title className="text-2xl">Welcome Back!</Components.Title>
+                     <Components.Title style={{fontSize:'1.5rem',lineHeight:'2rem'}}>Welcome Back!</Components.Title>
                      <Components.Paragraph>
                          To keep connected with us please login with your personal info
                      </Components.Paragraph>
@@ -72,12 +98,12 @@ function App() {
                      </Components.LeftOverlayPanel>
 
                      <Components.RightOverlayPanel signinIn={signIn}>
-                       <Components.Title className="text-2xl">Hello, Friend!</Components.Title>
+                       <Components.Title style={{fontSize:'1.5rem',lineHeight:'2rem'}}>Hello, Friend!</Components.Title>
                        <Components.Paragraph>
                            Enter Your personal details and start journey with us
                        </Components.Paragraph>
                            <Components.GhostButton onClick={() => toggle(false)}>
-                               Sigin Up
+                               Sign Up
                            </Components.GhostButton> 
                      </Components.RightOverlayPanel>
  
@@ -85,6 +111,7 @@ function App() {
              </Components.OverlayContainer>
 
          </Components.Container>
+        </div>
     )
 }
 
