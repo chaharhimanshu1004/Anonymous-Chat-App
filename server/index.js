@@ -26,7 +26,7 @@ mongoose.connect(process.env.MONGO_URI).then(()=>{console.log("Db connection don
 mongoose.connection.once('open',()=>{
     console.log('Db is connected');
     const changeStream = mongoose.connection.collection('conversations').watch();
-    changeStream.on('change',(change)=>{
+    changeStream.on('change',(change)=>{  
         if(change.operationType==='insert'){
             pusher.trigger('channels','newChannel',{
                 'change':change

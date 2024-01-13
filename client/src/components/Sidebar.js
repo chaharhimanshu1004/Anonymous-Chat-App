@@ -21,8 +21,17 @@ const pusher = new Pusher('a67ee38d224d6d46bad7', {
 export default function Sidebar() {
   const user = useSelector(selectUser);
   const [channels,setChannels] = useState([]);
-  
 
+  const handleAddChannel = (e) =>{
+    e.preventDefault();
+    const channelName = prompt('Enter a new ChannelName');
+    if(channelName){
+      axios.post('http://localhost:6001/api/users/new/channel',{
+        channelName: channelName
+      })
+    }
+  }
+  
   useEffect(()=>{
     const getChannels = async()=>{
       try{
@@ -33,9 +42,9 @@ export default function Sidebar() {
       }
     }
     getChannels();
-    const channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-      alert(JSON.stringify(data));
+    const channel = pusher.subscribe('channels');
+    channel.bind('newChannel', function(data) {
+      getChannels();
     });
     
   },[])
@@ -51,7 +60,7 @@ export default function Sidebar() {
             <ExpandMoreIcon />
             <h4>Text Channels</h4>
           </div>
-          <AddIcon className='sidebar__addChanel' />
+          <AddIcon onClick={handleAddChannel} className='sidebar__addChanel' />
         </div>
 
         <div className="sidebar__channelList">
@@ -69,7 +78,7 @@ export default function Sidebar() {
         {/* <Avatar src='https://media.cybernews.com/images/featured-big/2023/09/anonymous-hacker-mask.png'/> */}
         <Avatar src='https://m.economictimes.com/thumb/msid-76173969,width-1200,height-900,resizemode-4,imgsize-1099506/twitterati-began-following-longstanding-anonymous-posters-and-retweeting-them-.jpg'/>
         <div className="sidebar__profileInfo">
-          <h3>Anonymous1</h3>
+        <h3>{user ? user.name : 'Anonymous'}</h3>
           <p>#Hacker</p>
         </div>
         <div className="sidebar__profileIcons">

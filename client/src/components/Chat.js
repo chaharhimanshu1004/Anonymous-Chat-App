@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useRef,useLayoutEffect } from 'react'
 import { useState } from 'react';
 import '../styling/Chat.css'
 import Message from './Message';
@@ -12,19 +12,31 @@ import { selectUser } from '../slices/userSlice'
 import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import { selectChannelId, selectChannelName } from '../slices/appSlice'
 import SendIcon from '@mui/icons-material/Send';
-import Alert from '@mui/material/Alert';
+
+
+
+import Pusher from 'pusher-js'
+const pusher = new Pusher('a67ee38d224d6d46bad7', {
+  cluster: 'ap2'
+});
 
 
 export default function Chat() {
+
   const user = useSelector(selectUser);
   const channelId = useSelector(selectChannelId)
   const channelName = useSelector(selectChannelName)
   const [input,setInput] = useState('');
   const [messages,setMessages] = useState([]);
-  console.log(user);
+  const chatMessagesRef = useRef(null);
 
 
 
+  const scrollToBottom = () => {
+    if (chatMessagesRef.current) {
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
+    }
+  };
   const sendMessage = async (e) => {
     e.preventDefault();
     if (!channelId) {
@@ -59,8 +71,16 @@ export default function Chat() {
       }
     }
     fetchMessages();
+    const channel = pusher.subscribe('conversation');
+    channel.bind('newMessage', function(data) {
+      fetchMessages();
+    });
   },[channelId])
-  // console.log(messages);
+
+  useLayoutEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
 
   if(!channelId){
     return(
@@ -81,9 +101,9 @@ export default function Chat() {
     
     
     <div className='chat1'>
-      
+  
       <ChatHeader channelName={channelName} />
-      <div className="chat__messages">
+      <div className="chat__messages" ref={chatMessagesRef}>
       {messages.map((message, index) => (
         <Message key={index} message={message.message} timestamp={message.timestamp} user={message.user} />
         
@@ -96,7 +116,7 @@ export default function Chat() {
         <form>
           <input value={input}  type="text" placeholder={channelName ? `Message #${channelName}` : 'Message '}  onChange={(e)=>setInput(e.target.value)} />
           <div className="chat__inputIcons">
-            <EmojiEmotionsIcon fontSize='large'  />
+            <EmojiEmotionsIcon fontSize='large' />
           </div>
           <button onClick={sendMessage} className='chat__inputButton' type='submit'><SendIcon style={{color:'rgb(212,211,211)'}} fontSize='large'/></button>
         </form>

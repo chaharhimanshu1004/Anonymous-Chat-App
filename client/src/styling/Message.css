@@ -11,6 +11,7 @@
 
 .message__timestamp{
     color: gray;
-    margin-left: 20px;
+    padding-left: 34px;
     font-size: x-small;
+    font-weight: 800;
 }
