@@ -5,9 +5,22 @@
     height: 100vh;
     display: flex;
 }
+
 .chat__messages{
     flex: 1;
     overflow-y: auto;
+}
+
+.d-block{
+    display: block;
+}
+.d-hidden{
+    display: none;
+}
+.emojiPickerContainer {
+    position: fixed; 
+    bottom: 104px;   
+    right: 0;       
 }
 .chat__input {
     color: lightgray;
