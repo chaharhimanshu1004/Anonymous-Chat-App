@@ -9,6 +9,15 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import axios from 'axios'
 import { useSelector } from 'react-redux';
 import { selectUser } from '../slices/userSlice'
+import Pusher from 'pusher-js'
+
+const pusher = new Pusher('a67ee38d224d6d46bad7', {
+  cluster: 'ap2'
+});
+
+
+
+
 export default function Sidebar() {
   const user = useSelector(selectUser);
   const [channels,setChannels] = useState([]);
@@ -24,6 +33,10 @@ export default function Sidebar() {
       }
     }
     getChannels();
+    const channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(JSON.stringify(data));
+    });
     
   },[])
   return (
