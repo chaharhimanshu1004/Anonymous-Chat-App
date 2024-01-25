@@ -7,15 +7,24 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-body{
+.fullContainer{
+    width: 100vw;
     background-color: #c9d6ff;
-    background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+    background: linear-gradient(to right, #434242, #2a3e80);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 100vh;
+    height: 100vh;  
 }
+.container input::placeholder {
+    font-size: 16px; 
+    padding: 7px;
+}
+.container input {
+    font-weight: bold;
+  }
+
 
 .container{
     background-color: #fff;
@@ -151,19 +160,19 @@ body{
     height: 100%;
     overflow: hidden;
     transition: all 0.6s ease-in-out;
-    border-radius: 150px 0 0 100px;
+    border-radius: 10px 10px 10px 10px;
     z-index: 1000;
 }
 
 .container.active .toggle-container{
     transform: translateX(-100%);
-    border-radius: 0 150px 100px 0;
+    border-radius: 10px 10px 10px 10px;
 }
 
 .toggle{
     background-color: rgb(51,57,72);
     height: 100%;
-    background: linear-gradient(to right, #3e3f41, rgb(51,57,72));
+    background: linear-gradient(to right, #333436, rgb(51,57,72));
     color: #fff;
     position: relative;
     left: -100%;

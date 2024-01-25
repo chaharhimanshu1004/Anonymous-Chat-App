@@ -1,9 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import '../styling/Login.css'
+import axios from 'axios';
+import {useDispatch} from 'react-redux'
+import {login} from '../slices/userSlice'
+
 
 const App = () => {
-  const [isContainerActive, setIsContainerActive] = useState(false);
+  const [name,setName] = useState('');
+  const [email,setEmail] = useState('');
+  const [username,setUsername] = useState('')
+  const [password,setPassword] = useState('')
+  const dispatch = useDispatch();
 
+  const handleSignUp = async(event)=>{
+    event.preventDefault();
+    try{
+        await axios.post('http://localhost:6001/api/users/register',{
+            name,
+            email
+        }).then((response)=>alert(response.data.message)).catch(handleAxiosError)
+        
+    }catch (error) {
+        console.error('Error during registration:', error);
+    }
+  }
+  const handleAxiosError = (error) => {
+    console.error('Axios error:', error);
+
+    // Show an alert for bad requests
+    if (error.response && error.response.status === 400) {
+      alert('Either User is already Registered or check Your EMail,Only Bennett Students can sign in and register');
+    }
+  };
+
+  const handleSignIn = async(event)=>{
+    event.preventDefault();
+    try{
+        const response = await axios.post('http://localhost:6001/api/users/login',{
+            username,
+            password
+        });
+        if(response.data.token){
+            dispatch(login({
+                name:username,
+                uid:response.data.userId
+            }))
+        }
+        const {  userId } = response.data;
+        localStorage.setItem('user', JSON.stringify({ username, userId }));
+        
+    }catch (error) {
+        console.error('Error during login:', error);
+    }
+}
+
+
+  const [isContainerActive, setIsContainerActive] = useState(false);
   useEffect(() => {
     const registerBtn = document.getElementById('register');
     const loginBtn = document.getElementById('login');
@@ -25,25 +77,26 @@ const App = () => {
     };
   }, []);
 
+
   return (
-    <div className={`container ${isContainerActive ? 'active' : ''}`} id="container">
+    <div className="fullContainer">
+      <div className={`container ${isContainerActive ? 'active' : ''}`} id="container">
       <div className="form-container sign-up">
         <form>
-          <h1>Create Account</h1>
-          <input type="text" placeholder="Name" />
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <button>Sign Up</button>
+          <h1 style={{fontWeight:'bold',fontSize:'36px'}}>Create Account</h1>
+          <input  value={name} onChange={(e)=>setName(e.target.value)} type="text" placeholder="Name" />
+          <input  type="email" placeholder="Email" />
+          <input value={email} onChange={(e)=>setEmail(e.target.value)} type="email" placeholder="Confirm Email" />
+          <button onClick={handleSignUp}>Sign Up</button>
         </form>
       </div>
       <div className="form-container sign-in">
         <form>
-          <h1>Sign In</h1>
+          <h1 style={{fontWeight:'bold',fontSize:'40px'}}>Sign In</h1>
           
-          <input type="email" placeholder="Email" />
-          <input type="password" placeholder="Password" />
-          <a href="#">Forget Your Password?</a>
-          <button>Sign In</button>
+          <input value={username} onChange={(e)=>setUsername(e.target.value)} type="text" placeholder="Username" />
+          <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" placeholder="Password" />
+          <button onClick={handleSignIn}>Sign In</button>
         </form>
       </div>
       <div className="toggle-container">
@@ -54,13 +107,15 @@ const App = () => {
             <button className="hidden" id="login">Sign In</button>
           </div>
           <div className="toggle-panel toggle-right">
-            <h1>Hello, Friend!</h1>
-            <p>Register with your personal details to use all site features</p>
+            <h1>Hello, Bennetians!</h1>
+            <p style={{fontSize:'15px',fontWeight:'500'}}>Register with your personal details to use all site features</p>
             <button className="hidden" id="register">Sign Up</button>
           </div>
         </div>
       </div>
     </div>
+    </div>
+    
   );
 };
 
