@@ -31,6 +31,7 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const chatMessagesRef = useRef(null);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
+  console.log(user);
 
   
   const scrollToBottom = () => {

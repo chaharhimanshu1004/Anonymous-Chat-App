@@ -76,9 +76,8 @@ export default function Sidebar() {
       </div>
       <div className="sidebar__profile">
         {/* <Avatar src='https://media.cybernews.com/images/featured-big/2023/09/anonymous-hacker-mask.png'/> */}
-        <Avatar src='https://m.economictimes.com/thumb/msid-76173969,width-1200,height-900,resizemode-4,imgsize-1099506/twitterati-began-following-longstanding-anonymous-posters-and-retweeting-them-.jpg'/>
-        {/* <Avatar src={user?user.img : 'https://m.economictimes.com/thumb/msid-76173969,width-1200,height-900,resizemode-4,imgsize-1099506/twitterati-began-following-longstanding-anonymous-posters-and-retweeting-them-.jpg'}/> */}
-
+        {/* <Avatar src='https://m.economictimes.com/thumb/msid-76173969,width-1200,height-900,resizemode-4,imgsize-1099506/twitterati-began-following-longstanding-anonymous-posters-and-retweeting-them-.jpg'/> */}
+        <Avatar src={user?user.imageUrl : 'https://m.economictimes.com/thumb/msid-76173969,width-1200,height-900,resizemode-4,imgsize-1099506/twitterati-began-following-longstanding-anonymous-posters-and-retweeting-them-.jpg'}/>
         <div className="sidebar__profileInfo">
         <h3>{user ? user.name : 'Anonymous'}</h3>
           <p>#Hacker</p>

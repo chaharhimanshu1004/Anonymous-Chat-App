@@ -9,11 +9,13 @@ import Login from './components/Login';
 import { login } from './slices/userSlice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import axios from 'axios';
 import Modal from './components/Modal';
 import Image1 from './images/hacker1.avif'
 import Image2 from './images/hacker2.jpeg'
 import Image3 from './images/hacker3.jpeg'
 import Image4 from './images/hacker4.jpeg'
+
 
 
 
@@ -33,25 +35,35 @@ function App() {
       // Parse the stored user information and dispatch the login action
       const parsedUser = JSON.parse(storedUser);
       dispatch(login({ name: parsedUser.username, uid: parsedUser.userID }));
+      setModalOpen(true);
     }
   }, [dispatch]);
 
 
 
-  const handleImageSelect = (imageUrl) => {
-    // Set the selected image URL in user component state
-    dispatch(setUserImage({ userId: user.uid, imageUrl }));
-    // Close the modal
+  const handleImageSelect = async(imageUrl) => {
+    // dispatch(setUserImage({ userId: user.uid, imageUrl }));
+    try{
+      await axios.post('http://localhost:6001/api/users/setImage',{
+        username:user.name,
+        imageUrl:imageUrl
+      })
+
+    }catch(err){
+      alert('Error while setting the image')
+    }
+    
     setModalOpen(false);
   };
+
 
   const renderModal = () => {
     return (
       <Modal closeModal={() => setModalOpen(false)}>
-        <h2>Select an Image</h2>
+        <h2 style={{fontSize:'24px'}}>Select an Image for your Avatar</h2>
         <div className="image-options">
           {imageOptions.map((imageUrl, index) => (
-            <img key={index} src={imageUrl} alt={`Image ${index + 1}`} onClick={() => handleImageSelect(imageUrl)} />
+            <img width='240px'  height='170px' key={index} src={imageUrl} alt={`Image ${index + 1}`} onClick={() => handleImageSelect(imageUrl)} />
           ))}
         </div>
       </Modal>
@@ -72,6 +84,7 @@ function App() {
           </>
         ):(
           <h2><Login/></h2>
+
         )
       }
       {/* {!user?.imageUrl && modalOpen && renderModal()} */}

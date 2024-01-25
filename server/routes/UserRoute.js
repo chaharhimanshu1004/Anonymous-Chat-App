@@ -79,8 +79,21 @@ router.post('/login',async(req,res)=>{
         console.error(error);
         res.status(500).json({ message: "Error while Loggin In!!" });
     }
-    
-    
+})
+router.post('/setImage',async(req,res)=>{
+    const {username,imageUrl} = req.body;
+    try{
+        const user = await userModel.findOne({username});
+
+        user.imageUrl = imageUrl;
+        await user.save();
+        res.status(200).json({ message: "Image set successfully!" });
+
+        
+    }catch(err){
+        console.error(error);
+        res.status(500).json({ message: "Error while setting the image!!" });
+    }
 })
 
 module.exports = router;

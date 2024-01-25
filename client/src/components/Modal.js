@@ -6,7 +6,7 @@ const Modal = ({ children, closeModal }) => {
     <div className="modal">
       <div className="modal-content">
         <span className="close" onClick={closeModal}>&times;</span>
-        {children}
+        <div className="images">{children}</div>
       </div>
     </div>
   );

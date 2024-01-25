@@ -1,25 +1,33 @@
 .modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    height: 350px;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 9999; /* Ensure modal is above other elements */
-  }
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 540px;
+  height: 450px;
+  background-color: #363a3f;
+  border: 3px solid rgba(128, 128, 128, 0.67);
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 5; 
+  display: flex;
+  color: rgb(230, 232, 236);
+
   
-  .modal-content {
-    padding: 20px;
-  }
-  
-  .close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-  
+}
+
+.modal-content {
+  padding: 15px;
+  cursor: pointer;
+}
+
+
+.close {
+  position: absolute;
+  top: 15px; 
+  right: 15px; 
+  cursor: pointer;
+  color: rgb(250, 250, 250);
+  font-size: 28px; 
+  line-height: 1; 
+}

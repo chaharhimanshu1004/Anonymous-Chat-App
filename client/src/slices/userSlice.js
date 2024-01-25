@@ -13,7 +13,6 @@ export const userSlice = createSlice({
             state.user = null;
         },
         setUserImage: (state, action) => {
-            // Assuming action.payload contains userId and imageUrl
             if (state.user && state.user.uid === action.payload.userId) {
                 state.user.imageUrl = action.payload.imageUrl;
             }
