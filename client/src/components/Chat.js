@@ -45,7 +45,8 @@ export default function Chat() {
       return;
     }
     if (input.trim() === '') {
-      alert(`Can't send Empty Messages`)
+      // alert(`Can't send Empty Messages`)
+      return;
     }
     try {
       // Make a POST request to your backend API to send the message

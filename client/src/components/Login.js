@@ -40,14 +40,16 @@ const App = () => {
             username,
             password
         });
+        // console.log(response);
+
         if(response.data.token){
             dispatch(login({
                 name:username,
-                uid:response.data.userId
+                userID:response.data.userID
             }))
         }
-        const {  userId } = response.data;
-        localStorage.setItem('user', JSON.stringify({ username, userId }));
+        const userID  = response.data.userID;
+        localStorage.setItem('user', JSON.stringify({ username, userID }));
         
     }catch (error) {
         console.error('Error during login:', error);
