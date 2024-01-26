@@ -31,7 +31,9 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const chatMessagesRef = useRef(null);
   const [isPickerVisible, setIsPickerVisible] = useState(false);
-  console.log(user);
+
+
+
 
   
   const scrollToBottom = () => {
@@ -54,7 +56,12 @@ export default function Chat() {
       await axios.post(`http://localhost:6001/api/users/addMessage?id=${channelId}`, {
         message: input,
         timestamp: Date.now(),
-        user,
+        user: {
+          name: user.name,   
+          photo: user.imageUrl, 
+          uid: user.userID,    
+        },
+
       });
       setInput('');
     } catch (error) {

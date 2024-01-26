@@ -34,10 +34,11 @@ function App() {
     if (storedUser) {
       // Parse the stored user information and dispatch the login action
       const parsedUser = JSON.parse(storedUser);
-      dispatch(login({ name: parsedUser.username, uid: parsedUser.userID }));
+      dispatch(login({ name: parsedUser.username, userID: parsedUser.userID,imageUrl:parsedUser.imageUrl }));
       setModalOpen(true);
     }
   }, [dispatch]);
+
 
 
 

@@ -73,7 +73,11 @@ router.post('/login',async(req,res)=>{
             return res.json({message:"Password doesn't match"})
         }
         const token = jwt.sign({id:user._id},process.env.SECRET);
-        res.json({token,userID:user._id});
+        res.json({ 
+            token,
+            userID: user._id,
+            imageUrl: user.imageUrl,
+        });
 
     }catch(err){
         console.error(error);

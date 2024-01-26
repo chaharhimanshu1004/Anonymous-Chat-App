@@ -40,16 +40,18 @@ const App = () => {
             username,
             password
         });
-        // console.log(response);
+        console.log(response);
 
         if(response.data.token){
             dispatch(login({
                 name:username,
-                userID:response.data.userID
+                userID:response.data.userID,
+                imageUrl:response.data.imageUrl,
             }))
         }
         const userID  = response.data.userID;
-        localStorage.setItem('user', JSON.stringify({ username, userID }));
+        const imageUrl = response.data.imageUrl;
+        localStorage.setItem('user', JSON.stringify({ username, userID, imageUrl }));
         
     }catch (error) {
         console.error('Error during login:', error);

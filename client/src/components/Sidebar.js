@@ -22,6 +22,7 @@ export default function Sidebar() {
   const user = useSelector(selectUser);
   const [channels,setChannels] = useState([]);
 
+
   const handleAddChannel = (e) =>{
     e.preventDefault();
     const channelName = prompt('Enter a new ChannelName');
