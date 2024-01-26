@@ -21,7 +21,6 @@ function ChatHeader({channelName}) {
                 <span className='chatHeader__hash'>
                     # 
                 </span>
-                {/* {channelName?(channelName):'Hello'} */}
                 {channelName}
             </h3>
 

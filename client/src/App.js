@@ -24,15 +24,15 @@ function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
+  console.log(user);
 
   const imageOptions = [Image1, Image2, Image3, Image4];
 
   useEffect(() => {
-    // Check if user information is stored in local storage
     const storedUser = localStorage.getItem('user');
 
     if (storedUser) {
-      // Parse the stored user information and dispatch the login action
+
       const parsedUser = JSON.parse(storedUser);
       dispatch(login({ name: parsedUser.username, userID: parsedUser.userID,imageUrl:parsedUser.imageUrl }));
       setModalOpen(true);
@@ -49,6 +49,9 @@ function App() {
         username:user.name,
         imageUrl:imageUrl
       })
+      alert('Login Again Please')
+      localStorage.removeItem('user');
+      window.location.reload();
 
     }catch(err){
       alert('Error while setting the image')
@@ -88,8 +91,8 @@ function App() {
 
         )
       }
-      {/* {!user?.imageUrl && modalOpen && renderModal()} */}
-      {modalOpen && renderModal()}
+      {!user?.imageUrl && modalOpen && renderModal()}
+
       
 
     </div>

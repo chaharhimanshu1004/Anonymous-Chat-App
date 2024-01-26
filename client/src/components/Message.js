@@ -4,7 +4,7 @@ import { Avatar } from '@mui/material';
 
 
 function Message({message,user,timestamp}) {
-  console.log(user);
+
 
 
 
