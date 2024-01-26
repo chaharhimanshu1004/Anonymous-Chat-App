@@ -17,7 +17,7 @@ function Message({message,user,timestamp}) {
                     {new Date(parseInt(timestamp)).toDateString()}
                 </span>
             </h4>
-            <p>{message}</p>
+            <p style={{fontWeight:'500',marginTop:'2px'}}>{message}</p>
         </div>
     </div>
   )

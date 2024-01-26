@@ -18,8 +18,6 @@ import Image4 from './images/hacker4.jpeg'
 
 
 
-
-
 function App() {
   const user = useSelector(selectUser);
   const dispatch = useDispatch();
