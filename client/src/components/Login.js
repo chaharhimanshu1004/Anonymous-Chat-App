@@ -27,7 +27,7 @@ const App = () => {
   const handleAxiosError = (error) => {
     console.error('Axios error:', error);
 
-    // Show an alert for bad requests
+
     if (error.response && error.response.status === 400) {
       alert('Either User is already Registered or check Your EMail,Only Bennett Students can sign in and register');
     }
@@ -40,7 +40,10 @@ const App = () => {
             username,
             password
         });
-        console.log(response);
+        // console.log(response);
+        if(!response.data.token){
+          alert('Check your credentials!')
+        }
 
         if(response.data.token){
             dispatch(login({
@@ -57,7 +60,6 @@ const App = () => {
         console.error('Error during login:', error);
     }
 }
-
 
   const [isContainerActive, setIsContainerActive] = useState(false);
   useEffect(() => {

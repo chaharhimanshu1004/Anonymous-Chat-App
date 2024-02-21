@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer');
 const userModel = require('../model/UserModel');
 require('dotenv').config();
 
+
 router.post('/register',async(req,res)=>{
     try{
         const {name,email} = req.body;
@@ -19,7 +20,7 @@ router.post('/register',async(req,res)=>{
         const count = await userModel.countDocuments({});
         const username = `Anonymous${count+1}`;
         const password = Math.random().toString(36).slice(-8);
-        // Hash the password
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         const user = new userModel({
@@ -88,7 +89,6 @@ router.post('/setImage',async(req,res)=>{
     const {username,imageUrl} = req.body;
     try{
         const user = await userModel.findOne({username});
-
         user.imageUrl = imageUrl;
         await user.save();
         res.status(200).json({ message: "Image set successfully!" });
@@ -99,5 +99,6 @@ router.post('/setImage',async(req,res)=>{
         res.status(500).json({ message: "Error while setting the image!!" });
     }
 })
+
 
 module.exports = router;
