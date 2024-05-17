@@ -3,6 +3,7 @@ import '../styling/Login.css'
 import axios from 'axios';
 import {useDispatch} from 'react-redux'
 import {login} from '../slices/userSlice'
+import toast from 'react-hot-toast';
 
 
 const App = () => {
@@ -18,10 +19,16 @@ const App = () => {
         await axios.post('http://localhost:6001/api/users/register',{
             name,
             email
-        }).then((response)=>alert(response.data.message)).catch(handleAxiosError)
+        })
+        .then((response)=>{
+            if(response.data.message){
+                toast.success('User Registered Successfully,Check your Email for Login Details');
+            }
+        })
         
     }catch (error) {
         console.error('Error during registration:', error);
+        toast.error('Error during registration!');
     }
   }
   const handleAxiosError = (error) => {
@@ -55,6 +62,7 @@ const App = () => {
         const userID  = response.data.userID;
         const imageUrl = response.data.imageUrl;
         localStorage.setItem('user', JSON.stringify({ username, userID, imageUrl }));
+        toast.success('Logged in successfully!');
         
     }catch (error) {
         console.error('Error during login:', error);
