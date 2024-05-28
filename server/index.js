@@ -11,9 +11,9 @@ app.use(cors());
 app.use(express.json());
 
 const pusher = new Pusher({
-    appId: "1740143",
-    key: "a67ee38d224d6d46bad7",
-    secret: "b07287c208ef31b5096f",
+    appId: process.env.PUSHER_APPID,
+    key: process.env.PUSHER_KEY,
+    secret: process.env.PUSHER_SECRET,
     cluster: "ap2",
     useTLS: true
 });
