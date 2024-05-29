@@ -30,7 +30,7 @@ function App() {
     const handleSignIn = async(event)=>{
         event.preventDefault();
         try{
-            const response = await axios.post('http://localhost:6001/api/users/login',{
+            const response = await axios.post('https://anonymous-chat-app-6lmf.onrender.com/api/users/login',{
                 username,
                 password
             });
@@ -51,7 +51,7 @@ function App() {
     const handleSignUp = async(event)=>{
         event.preventDefault();
         try{
-            const response = await axios.post('http://localhost:6001/api/users/register',{
+            const response = await axios.post('https://anonymous-chat-app-6lmf.onrender.com/api/users/register',{
                 name,
                 email
             });

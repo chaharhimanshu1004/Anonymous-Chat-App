@@ -27,7 +27,7 @@ export default function Sidebar() {
     e.preventDefault();
     const channelName = prompt('Enter a new ChannelName');
     if(channelName){
-      axios.post('http://localhost:6001/api/users/new/channel',{
+      axios.post('https://anonymous-chat-app-6lmf.onrender.com/api/users/new/channel',{
         channelName: channelName
       })
     }
@@ -36,7 +36,7 @@ export default function Sidebar() {
   useEffect(()=>{
     const getChannels = async()=>{
       try{
-        const response = await axios.get('http://localhost:6001/api/users/get/channelList');
+        const response = await axios.get('https://anonymous-chat-app-6lmf.onrender.com/api/users/get/channelList');
         setChannels(response.data);
       }catch(err){
         console.log('Error in getting channels: ',err);

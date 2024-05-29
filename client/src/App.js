@@ -43,7 +43,7 @@ function App() {
   const handleImageSelect = async(imageUrl) => {
     // dispatch(setUserImage({ userId: user.uid, imageUrl }));
     try{
-      await axios.post('http://localhost:6001/api/users/setImage',{
+      await axios.post('https://anonymous-chat-app-6lmf.onrender.com/api/users/setImage',{
         username:user.name,
         imageUrl:imageUrl
       })

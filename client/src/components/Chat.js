@@ -53,7 +53,7 @@ export default function Chat() {
     }
     try {
       // Make a POST request to your backend API to send the message
-      await axios.post(`http://localhost:6001/api/users/addMessage?id=${channelId}`, {
+      await axios.post(`https://anonymous-chat-app-6lmf.onrender.com/api/users/addMessage?id=${channelId}`, {
         message: input,
         timestamp: Date.now(),
         user: {
@@ -73,7 +73,7 @@ export default function Chat() {
     const fetchMessages = async () => {
       if (channelId) {
         try {
-          const response = await axios.get(`http://localhost:6001/api/users/get/conversation?id=${channelId}`)
+          const response = await axios.get(`https://anonymous-chat-app-6lmf.onrender.com/api/users/get/conversation?id=${channelId}`)
           setMessages(response.data);
         } catch (err) {
           console.log(err)
